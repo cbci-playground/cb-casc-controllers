@@ -3,6 +3,10 @@ jenkins:
   views:
     - all:
         name: all
+  labelAtoms:
+  - name: "built-in"
+  labelString: "built-in"
+  numExecutors: 2
 beekeeper:
   enabled: false
 unclassified:
