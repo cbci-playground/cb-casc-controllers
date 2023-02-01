@@ -5,7 +5,7 @@ removeStrategy:
 items:
   - kind: pipeline
     name: pipeline-scripted-1
-    concurrentBuild: false
+    concurrentBuild: true
     properties:
       - pipelineTriggers:
           triggers:

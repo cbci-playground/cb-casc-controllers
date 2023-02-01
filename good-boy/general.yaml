@@ -64,6 +64,9 @@ unclassified:
           discarder:
             logRotator:
               numToKeepStr: "3"
+  provisioningLimitConfiguration:
+    limit:
+      nodes: 1
 kube:
   podTemplatesConfiguration:
     templates:
