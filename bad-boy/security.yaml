@@ -1,4 +1,7 @@
 jenkins:
   authorizationStrategy: "cloudBeesRoleBasedAccessControl"
   securityRealm: "operationsCenter"
+  labelAtoms:
+  - name: "built-in"
+  labelString: "built-in"
   numExecutors: 2
