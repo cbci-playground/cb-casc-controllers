@@ -6,6 +6,15 @@ items:
   - kind: pipeline
     name: pipeline-dummy-1-builtIn
     concurrentBuild: true
+    description: ''
+    disabled: false
+    displayName: pipeline-dummy-1-builtIn
+    properties:
+    - pipelineTriggers:
+        triggers:
+        - cron:
+            spec: H/15 * * * *
+    resumeBlocked: false
     definition:
       cpsFlowDefinition:
         sandbox: true
@@ -25,19 +34,19 @@ items:
                 sh 'sleep 2m'
               }
           }
-    description: ''
-    disabled: false
-    displayName: pipeline-dummy-1-builtIn
-    properties:
-    - pipelineTriggers:
-        triggers:
-        - cron:
-            spec: H/15 * * * *
-    resumeBlocked: false
 
   - kind: pipeline
     name: pipeline-mockLoad-builtIn
     concurrentBuild: true
+    description: ''
+    disabled: false
+    displayName: pipeline-mockLoad-builtIn
+    properties:
+    - pipelineTriggers:
+        triggers:
+        - cron:
+            spec: H/30 * * * *
+    resumeBlocked: false
     definition:
       cpsFlowDefinition:
         sandbox: true
@@ -60,13 +69,3 @@ items:
               }
           }
           }]})
-
-    description: ''
-    disabled: false
-    displayName: pipeline-mockLoad-builtIn
-    properties:
-    - pipelineTriggers:
-        triggers:
-        - cron:
-            spec: H/30 * * * *
-    resumeBlocked: false

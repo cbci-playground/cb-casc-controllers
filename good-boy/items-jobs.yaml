@@ -5,11 +5,12 @@ removeStrategy:
 items:
   - kind: pipeline
     name: pipeline-scripted-1
+    concurrentBuild: false
     properties:
       - pipelineTriggers:
           triggers:
             - cron:
-                spec: H/5 * * * *
+                spec: H/30 * * * *
     definition:
       cpsFlowDefinition:
         sandbox: true
@@ -38,11 +39,12 @@ items:
           build job: JOB_NAME, wait: false
   - kind: pipeline
     name: pipeline-scripted-2
+    concurrentBuild: false
     properties:
       - pipelineTriggers:
           triggers:
             - cron:
-                spec: H/5 * * * *
+                spec: H/30 * * * *
     definition:
       cpsFlowDefinition:
         sandbox: true
@@ -66,71 +68,3 @@ items:
               }
             }
           }
-
-  # - kind: pipeline
-  #   name: pipeline-declarative
-  #   properties:
-  #     - pipelineTriggers:
-  #         triggers:
-  #           - cron:
-  #               spec: H/5 * * * *
-  #   definition:
-  #     cpsFlowDefinition:
-  #       sandbox: true
-  #       script: |
-  #         pipeline {
-  #           agent {
-  #             kubernetes {
-  #               yaml '''
-  #         apiVersion: v1
-  #         kind: Pod
-  #         spec:
-  #           containers:
-  #           - name: ubuntu
-  #             image: ubuntu
-  #             command:
-  #             - sleep
-  #             args:
-  #             - infinity
-  #           tolerations:
-  #           - key: "dedicated"
-  #             operator: "Equal"
-  #             value: "build"
-  #             effect: "NoSchedule"
-  #                   '''
-  #                 }
-  #             }
-  #           stages {
-  #             stage('Beginning') {
-  #               steps {
-  #                 container('ubuntu') {
-  #                     sh 'date > date.txt'
-  #                     stash name: 'stuff', includes: 'date.txt'
-  #                   }
-  #                 }
-  #               }
-  #             stage('End') {
-  #                 agent { label "maven" }
-  #                 steps {
-  #                   container('maven') {
-  #                       unstash 'stuff'
-  #                       sh 'cat date.txt'
-  #                   }
-  #                 }
-  #               }
-  #             }
-  #           }
-
-# - kind: cloudbeesTemplatedJob
-#   catalog: cbBlogExamples
-#   name: pipeline-beta
-#   model: cbBlogExamples/simple-java-maven-app
-#   attributes:
-#   - value: GH-token-merck
-#     key: github_creds
-#   - value: pipeline-beta
-#     key: name
-#   - value: no.one@mail.com
-#     key: emailRecipient
-#   - value: https://github.com/jenkins-demo/simple-maven-project-with-tests.git
-#     key: github_repo
