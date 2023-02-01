@@ -1,4 +1,4 @@
 jenkins:
   authorizationStrategy: "cloudBeesRoleBasedAccessControl"
   securityRealm: "operationsCenter"
-  numExecutors: 1
+  numExecutors: 2
