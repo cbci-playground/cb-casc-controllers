@@ -4,133 +4,69 @@ removeStrategy:
 
 items:
   - kind: pipeline
-    name: pipeline-scripted-1
-    properties:
-      - pipelineTriggers:
-          triggers:
-            - cron:
-                spec: H/5 * * * *
+    name: pipeline-dummy-1-builtIn
+    concurrentBuild: true
     definition:
       cpsFlowDefinition:
         sandbox: true
-        script: |
-          parallel([0, 1].collectEntries {b -> ["branch-$b", {
-            podTemplate {
-              node("maven") {
-                stage('prep') {
-                  sh 'curl https://ipinfo.io/'
-                }
-                stage('build') {
-                  mockLoad 180
-                }
-            }
-            checkpoint 'middle'
-            podTemplate {
-              node("maven") {
-                stage('publish') {
-                  archiveArtifacts allowEmptyArchive: true, artifacts: 'mock-artifact-*.txt'
-                  fingerprint 'mock-artifact-*.txt'
-                  junit 'mock-junit.xml'
-                }
-              }
-            }
-          }}]})
-          build job: JOB_NAME, wait: false
-  - kind: pipeline
-    name: pipeline-scripted-2
-    properties:
-      - pipelineTriggers:
-          triggers:
-            - cron:
-                spec: H/5 * * * *
-    definition:
-      cpsFlowDefinition:
-        sandbox: true
-        script: |
-          podTemplate {
-            node(POD_LABEL) {
+        script: |+
+          node("built-in") {
               stage('beginning') {
                 sh 'sleep 30'
                 sh 'date > date.txt'
                 stash name: 'stuff', includes: 'date.txt'
               }
-            }
+              checkpoint 'middle'
           }
-          checkpoint 'middle'
-          podTemplate {
-            node(POD_LABEL) {
+          stage('beginning') {
               stage('end') {
                 unstash 'stuff'
                 sh 'cat date.txt'
                 sh 'sleep 2m'
               }
-            }
           }
+    description: ''
+    disabled: false
+    displayName: pipeline-dummy-1-builtIn
+    properties:
+    - pipelineTriggers:
+        triggers:
+        - cron:
+            spec: H/15 * * * *
+    resumeBlocked: false
 
-  # - kind: pipeline
-  #   name: pipeline-declarative
-  #   properties:
-  #     - pipelineTriggers:
-  #         triggers:
-  #           - cron:
-  #               spec: H/5 * * * *
-  #   definition:
-  #     cpsFlowDefinition:
-  #       sandbox: true
-  #       script: |
-  #         pipeline {
-  #           agent {
-  #             kubernetes {
-  #               yaml '''
-  #         apiVersion: v1
-  #         kind: Pod
-  #         spec:
-  #           containers:
-  #           - name: ubuntu
-  #             image: ubuntu
-  #             command:
-  #             - sleep
-  #             args:
-  #             - infinity
-  #           tolerations:
-  #           - key: "dedicated"
-  #             operator: "Equal"
-  #             value: "build"
-  #             effect: "NoSchedule"
-  #                   '''
-  #                 }
-  #             }
-  #           stages {
-  #             stage('Beginning') {
-  #               steps {
-  #                 container('ubuntu') {
-  #                     sh 'date > date.txt'
-  #                     stash name: 'stuff', includes: 'date.txt'
-  #                   }
-  #                 }
-  #               }
-  #             stage('End') {
-  #                 agent { label "maven" }
-  #                 steps {
-  #                   container('maven') {
-  #                       unstash 'stuff'
-  #                       sh 'cat date.txt'
-  #                   }
-  #                 }
-  #               }
-  #             }
-  #           }
+  - kind: pipeline
+    name: pipeline-mockLoad-builtIn
+    concurrentBuild: true
+    definition:
+      cpsFlowDefinition:
+        sandbox: true
+        script: |+
+          parallel([0, 1].collectEntries {b -> ["branch-$b", {
+          node("built-in") {
+              stage('prep') {
+                    sh 'curl https://ipinfo.io/'
+                }
+              stage('build') {
+                mockLoad 180
+              }
+              checkpoint 'middle'
+          }
+          node("built-in") {
+              stage('publish') {
+                archiveArtifacts allowEmptyArchive: true, artifacts: 'mock-artifact-*.txt'
+                fingerprint 'mock-artifact-*.txt'
+                junit 'mock-junit.xml'
+              }
+          }
+          }]})
 
-# - kind: cloudbeesTemplatedJob
-#   catalog: cbBlogExamples
-#   name: pipeline-beta
-#   model: cbBlogExamples/simple-java-maven-app
-#   attributes:
-#   - value: GH-token-merck
-#     key: github_creds
-#   - value: pipeline-beta
-#     key: name
-#   - value: no.one@mail.com
-#     key: emailRecipient
-#   - value: https://github.com/jenkins-demo/simple-maven-project-with-tests.git
-#     key: github_repo
+    description: ''
+    disabled: false
+    displayName: pipeline-mockLoad-builtIn
+    properties:
+    - pipelineTriggers:
+        triggers:
+        - cron:
+            spec: H/30 * * * *
+    resumeBlocked: false
