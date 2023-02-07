@@ -90,26 +90,6 @@ kube:
         nodeUsageMode: "NORMAL"
         volumes:
           - persistentVolumeClaim:
-              claimName: "jenkins-agents-maven-cache"
+              claimName: "maven-cache"
               mountPath: "/root/.m2/repository"
               readOnly: false
-        yaml: |-
-          apiVersion: v1
-          kind: Pod
-          spec:
-            tolerations:
-              - key: "dedicated"
-                operator: "Equal"
-                value: "build"
-                effect: "NoSchedule"
-        yamlMergeStrategy: "override"
-        yamls:
-          # - |-
-          #   apiVersion: v1
-          #   kind: Pod
-          #   spec:
-          #     tolerations:
-          #       - key: "dedicated"
-          #         operator: "Equal"
-          #         value: "build"
-          #         effect: "NoSchedule"
