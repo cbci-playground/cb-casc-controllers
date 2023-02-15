@@ -64,42 +64,42 @@ unclassified:
           discarder:
             logRotator:
               numToKeepStr: "3"
+  #Avoid
   provisioningLimitConfiguration:
     limit:
-      nodes: 1
+      nodes: 50
 kube:
   podTemplatesConfiguration:
     templates:
-      - containers:
-          - args: "cat"
-            command: "/bin/sh -c"
-            image: "maven:3.8.1-jdk-8"
-            livenessProbe:
-              failureThreshold: 0
-              initialDelaySeconds: 0
-              periodSeconds: 0
-              successThreshold: 0
-              timeoutSeconds: 0
-            name: "maven"
-            ttyEnabled: true
-            workingDir: "/home/jenkins/agent"
-        idleMinutes: 5
-        idleMinutesStr: "5"
-        label: "maven"
+    - containers:
+      - args: "cat"
+        command: "/bin/sh -c"
+        image: "maven:3.8.1-jdk-8"
+        livenessProbe:
+          failureThreshold: 0
+          initialDelaySeconds: 0
+          periodSeconds: 0
+          successThreshold: 0
+          timeoutSeconds: 0
         name: "maven"
-        nodeUsageMode: "NORMAL"
+        ttyEnabled: true
+        workingDir: "/home/jenkins/agent"
+      idleMinutes: 5
+      idleMinutesStr: "5"
+      label: "maven"
+      name: "maven"
+      nodeUsageMode: "NORMAL"
+      yaml: |-
+        kind: Pod
+        spec:
+          containers:
+          - name: "maven"
+            volumeMounts:
+              - mountPath: "/root/.m2/repository"
+                name: "maven-pv-storage"
         volumes:
-          - persistentVolumeClaim:
+          - name: "maven-pv-storage"
+            persistentVolumeClaim:
               claimName: "maven-cache"
-              mountPath: "/root/.m2/repository"
               readOnly: false
-        # yaml: |-
-        #   apiVersion: v1
-        #   kind: Pod
-        #   spec:
-        #     tolerations:
-        #       - key: "dedicated"
-        #         operator: "Equal"
-        #         value: "build"
-        #         effect: "NoSchedule"
-        # yamlMergeStrategy: "override"
+      yamlMergeStrategy: "override"
