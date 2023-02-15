@@ -40,11 +40,6 @@ kube:
         label: "maven"
         name: "maven"
         nodeUsageMode: "NORMAL"
-        volumes:
-          - persistentVolumeClaim:
-              claimName: "maven-cache"
-              mountPath: "/root/.m2/repository"
-              readOnly: false
         # yaml: |-
         #   apiVersion: v1
         #   kind: Pod
