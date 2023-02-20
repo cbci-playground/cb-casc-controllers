@@ -26,12 +26,6 @@ kube:
           - args: "cat"
             command: "/bin/sh -c"
             image: "maven:3.8.1-jdk-8"
-            livenessProbe:
-              failureThreshold: 0
-              initialDelaySeconds: 0
-              periodSeconds: 0
-              successThreshold: 0
-              timeoutSeconds: 0
             name: "maven"
             ttyEnabled: true
             workingDir: "/home/jenkins/agent"
