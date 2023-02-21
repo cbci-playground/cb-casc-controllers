@@ -34,7 +34,7 @@ items:
                 }
               }
             }
-          }}]})
+          }]})
           build job: JOB_NAME, wait: false
   - kind: pipeline
     name: pipeline-declarative
