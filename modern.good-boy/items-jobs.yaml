@@ -16,27 +16,26 @@ items:
         sandbox: true
         script: |
           parallel([0, 1].collectEntries {b -> ["branch-$b", {
-          podTemplate {
-            node("maven") {
-              stage('prep') {
-                sh 'curl https://ipinfo.io/'
-              }
-              stage('build') {
-                mockLoad 180
-              }
-          }
-          checkpoint 'middle'
-          podTemplate {
-            node("maven") {
-              stage('publish') {
-                archiveArtifacts allowEmptyArchive: true, artifacts: 'mock-artifact-*.txt'
-                fingerprint 'mock-artifact-*.txt'
-                junit 'mock-junit.xml'
+            podTemplate {
+              node("maven") {
+                stage('prep') {
+                  sh 'curl https://ipinfo.io/'
+                }
+                stage('build') {
+                  mockLoad 180
+                }
+            }
+            checkpoint 'middle'
+            podTemplate {
+              node("maven") {
+                stage('publish') {
+                  archiveArtifacts allowEmptyArchive: true, artifacts: 'mock-artifact-*.txt'
+                  fingerprint 'mock-artifact-*.txt'
+                  junit 'mock-junit.xml'
+                }
               }
             }
-          }
-          }]})
-          build job: JOB_NAME, wait: false
+          }}]})
   - kind: pipeline
     name: pipeline-declarative
     concurrentBuild: false

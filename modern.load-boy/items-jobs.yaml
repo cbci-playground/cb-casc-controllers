@@ -16,6 +16,7 @@ items:
         sandbox: true
         script: |
           parallel([0, 1].collectEntries {b -> ["branch-$b", {
+            podTemplate {
               node("maven") {
                 stage('prep') {
                   sh 'curl https://ipinfo.io/'
@@ -34,7 +35,7 @@ items:
                 }
               }
             }
-          }]})
+          }}]})
           build job: JOB_NAME, wait: false
   - kind: pipeline
     name: pipeline-declarative
