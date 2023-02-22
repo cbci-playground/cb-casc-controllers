@@ -96,9 +96,9 @@ kube:
           - name: "maven"
             volumeMounts:
               - mountPath: "/root/.m2/repository"
-                name: "maven-pv-storage"
+                name: "maven-cache"
         volumes:
-          - name: "maven-pv-storage"
+          - name: "maven-cache"
             persistentVolumeClaim:
               claimName: "maven-cache"
               readOnly: false
