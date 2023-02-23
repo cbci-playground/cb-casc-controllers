@@ -10,4 +10,4 @@ plugins:
 catalog:
   - "plugin-catalog.yaml"
 items:
-  - "items-jobs.yaml"
+  - "items-load-jobs.yaml"
