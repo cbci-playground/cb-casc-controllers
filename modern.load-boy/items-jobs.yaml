@@ -4,13 +4,46 @@ removeStrategy:
 
 items:
   - kind: pipeline
-    name: pipeline-declarative
+    name: pipeline-scripted-load-5m
+    concurrentBuild: true
+    properties:
+      - pipelineTriggers:
+          triggers:
+            - cron:
+                spec: H/5 * * * *
+    definition:
+      cpsFlowDefinition:
+        sandbox: true
+        script: |
+          parallel([0, 1].collectEntries {b -> ["branch-$b", {
+            podTemplate {
+              node("maven") {
+                stage('prep') {
+                  sh 'curl https://ipinfo.io/'
+                }
+                stage('build') {
+                  mockLoad 180
+                }
+            }
+            checkpoint 'middle'
+            podTemplate {
+              node("maven") {
+                stage('publish') {
+                  archiveArtifacts allowEmptyArchive: true, artifacts: 'mock-artifact-*.txt'
+                  fingerprint 'mock-artifact-*.txt'
+                  junit 'mock-junit.xml'
+                }
+              }
+            }
+          }}]})
+  - kind: pipeline
+    name: pipeline-declarative-10m
     concurrentBuild: false
     properties:
       - pipelineTriggers:
           triggers:
             - cron:
-                spec: H/30 * * * *
+                spec: H/10 * * * *
     definition:
       cpsFlowDefinition:
         sandbox: true

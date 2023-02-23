@@ -10,4 +10,5 @@ plugins:
 catalog:
   - "plugin-catalog.yaml"
 items:
-  - "items-load-jobs.yaml"
+  - "items-jobs.yaml"
+ #- "items-load-jobs.yaml"
