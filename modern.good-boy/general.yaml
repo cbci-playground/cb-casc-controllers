@@ -84,22 +84,24 @@ kube:
         name: "maven"
         ttyEnabled: true
         workingDir: "/home/jenkins/agent"
+      id: "5221a938-6fcb-48cd-b537-6fb9799fe08e"
       idleMinutes: 5
       idleMinutesStr: "5"
       label: "maven"
       name: "maven"
-      nodeUsageMode: "NORMAL"
+      nodeSelector: "build-linux"
+      nodeUsageMode: NORMAL
+      volumes:
+      - persistentVolumeClaim:
+          claimName: "maven-cache"
+          mountPath: "/root/.m2/repository"
+          readOnly: true
       yaml: |-
-        kind: Pod
-        spec:
-          containers:
-          - name: "maven"
-            volumeMounts:
-              - mountPath: "/root/.m2/repository"
-                name: "maven-cache"
-        volumes:
-          - name: "maven-cache"
-            persistentVolumeClaim:
-              claimName: "maven-cache"
-              readOnly: false
-      yamlMergeStrategy: "override"
+          apiVersion: v1
+          kind: Pod
+          spec:
+            tolerations:
+              - key: "dedicated"
+                operator: "Equal"
+                value: "build-linux"
+                effect: "NoSchedule"
