@@ -1,13 +1,11 @@
 apiVersion: "1"
-id: "good-boy"
-description: "Casc Bundle following Anti-patterns for Best Practices"
+id: "modern.good-boy"
+description: "Casc Bundle for Standard Controllers"
 version: "1"
-jcasc:
-  - "general.yaml"
-  - "security.yaml"
-plugins:
-  - "plugins.yaml"
-catalog:
-  - "plugin-catalog.yaml"
+parent: "modern.parent"
+allowCapExceptions: true
+jcascMergeStrategy: "errorOnConflict"
 items:
   - "items-jobs.yaml"
+variables:
+  - "variables.yaml" 

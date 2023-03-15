@@ -1,14 +1,9 @@
 apiVersion: "1"
-id: "bad-boy"
-description: "Casc Bundle following Best Practices"
+id: "modern.load-boy"
+description: "Casc Bundle for Load Controllers"
 version: "1"
-jcasc:
-  - "general.yaml"
-  - "security.yaml"
-plugins:
-  - "plugins.yaml"
-catalog:
-  - "plugin-catalog.yaml"
+parent: "modern.parent"
+allowCapExceptions: true
+jcascMergeStrategy: "errorOnConflict"
 items:
   - "items-jobs.yaml"
- #- "items-load-jobs.yaml"

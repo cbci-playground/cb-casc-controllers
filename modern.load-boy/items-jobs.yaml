@@ -4,7 +4,7 @@ removeStrategy:
 
 items:
   - kind: pipeline
-    name: pipeline-scripted-load-1m
+    name: fast-load
     concurrentBuild: true
     properties:
       - pipelineTriggers:
@@ -22,7 +22,7 @@ items:
                   sh 'curl https://ipinfo.io/'
                 }
                 stage('build') {
-                  mockLoad 180
+                  mockLoad 90
                 }
             }
             checkpoint 'middle'
@@ -37,7 +37,7 @@ items:
             }
           }}]})
   - kind: pipeline
-    name: pipeline-scripted-load-5m
+    name: slow-load
     concurrentBuild: false
     properties:
       - pipelineTriggers:

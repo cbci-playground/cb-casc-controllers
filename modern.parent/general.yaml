@@ -64,7 +64,7 @@ unclassified:
           discarder:
             logRotator:
               numToKeepStr: "3"
-  #Avoid
+  # Best-Practice: Limit the number of Agent Nodes to be connected to the Controller
   provisioningLimitConfiguration:
     limit:
       nodes: 50
@@ -84,7 +84,6 @@ kube:
         name: "maven"
         ttyEnabled: true
         workingDir: "/home/jenkins/agent"
-      id: "5221a938-6fcb-48cd-b537-6fb9799fe08e"
       idleMinutes: 5
       idleMinutesStr: "5"
       label: "maven"
