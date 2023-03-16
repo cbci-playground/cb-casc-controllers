@@ -10,7 +10,7 @@ items:
       - pipelineTriggers:
           triggers:
             - cron:
-                spec: H/1 * * * *
+                spec: H/2 * * * *
     definition:
       cpsFlowDefinition:
         sandbox: true
