@@ -88,7 +88,7 @@ kube:
       idleMinutesStr: "5"
       label: "maven"
       name: "maven"
-      nodeSelector: "build-linux"
+      nodeSelector: "dedicated=build-linux"
       nodeUsageMode: NORMAL
       volumes:
       - persistentVolumeClaim:
