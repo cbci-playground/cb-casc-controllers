@@ -88,7 +88,7 @@ kube:
       idleMinutesStr: "5"
       label: "maven"
       name: "maven"
-      nodeSelector: "kubernetes.io/hostname=ip-10-0-11-133.ec2.internal"
+      nodeSelector: "ci_type=build-linux"
       nodeUsageMode: NORMAL
       volumes:
       - persistentVolumeClaim:
