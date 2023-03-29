@@ -1,54 +1,41 @@
-kind: folder
-name: admin
-displayName: admin
-filteredRoles:
-- develop
-- browse
+removeStrategy:
+  rbac: SYNC
+  items: NONE
+
 items:
-- kind: backupAndRestore
-  name: restore-builds
-  blockBuildWhenDownstreamBuilding: false
-  blockBuildWhenUpstreamBuilding: false
-  buildersList:
-  - restoreBuilder:
-      ignoreConfirmationFile: true
-      preserveJenkinsHome: false
-      ignoreDigestCheck: false
-      store:
-        s3Store:
-          bucketName: crodriguezlopez-v3.backups
-          sse: true
-          bucketFolder: cbci_backup_plugin/builds
-          credentialsId: ''
-          region: us-east-1
-      restoreDirectory: ''
-  concurrentBuild: false
-  description: ''
-  disabled: false
-  displayName: restore-builds
-- kind: backupAndRestore
-  name: restore-config
-  blockBuildWhenDownstreamBuilding: false
-  blockBuildWhenUpstreamBuilding: false
-  buildersList:
-  - restoreBuilder:
-      ignoreConfirmationFile: true
-      preserveJenkinsHome: false
-      ignoreDigestCheck: false
-      store:
-        s3Store:
-          bucketName: crodriguezlopez-v3.backups
-          sse: true
-          bucketFolder: cbci_backup_plugin/conf
-          credentialsId: ''
-          region: us-east-1
-      restoreDirectory: ''
-  concurrentBuild: false
-  description: ''
-  disabled: false
-  displayName: restore-config
-properties:
-- envVars: {
-    }
-- itemRestrictions:
-    filter: false
+- kind: folder
+  name: admin
+  displayName: admin
+  filteredRoles:
+  - develop
+  - browse
+  items:
+  - kind: backupAndRestore
+    name: restore-builds
+    buildersList:
+    - restoreBuilder:
+        store:
+          s3Store:
+            bucketName: crodriguezlopez-v3.backups
+            sse: true
+            bucketFolder: cbci_backup_plugin/builds
+            region: us-east-1
+    concurrentBuild: false
+    displayName: restore-builds
+  - kind: backupAndRestore
+    name: restore-config
+    buildersList:
+    - restoreBuilder:
+        store:
+          s3Store:
+            bucketName: crodriguezlopez-v3.backups
+            sse: true
+            bucketFolder: cbci_backup_plugin/conf
+            region: us-east-1
+    concurrentBuild: false
+    displayName: restore-config
+  properties:
+  - envVars: {
+      }
+  - itemRestrictions:
+      filter: false
