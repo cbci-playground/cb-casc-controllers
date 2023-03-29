@@ -6,6 +6,6 @@ parent: "modern.parent"
 allowCapExceptions: true
 jcascMergeStrategy: "errorOnConflict"
 items:
-  - "items-jobs.yaml"
+  - items-root.yaml
 variables:
-  - "variables.yaml" 
+  - variables.yaml

@@ -3,6 +3,9 @@ plugins:
 - id: antisamy-markup-formatter
 - id: apache-httpcomponents-client-4-api
 - id: authentication-tokens
+- id: aws-credentials
+- id: aws-java-sdk-ec2
+- id: aws-java-sdk-minimal
 - id: blueocean-commons
 - id: bootstrap4-api
 - id: bootstrap5-api
@@ -45,6 +48,7 @@ plugins:
 - id: font-awesome-api
 - id: git-client
 - id: handy-uri-templates-2-api
+- id: infradna-backup
 - id: instance-identity
 - id: ionicons-api
 - id: jackson2-api
@@ -68,6 +72,7 @@ plugins:
 - id: metrics
 - id: mina-sshd-api-common
 - id: mina-sshd-api-core
+- id: mina-sshd-api-sftp
 - id: mock-load-builder
 - id: momentjs
 - id: nectar-license

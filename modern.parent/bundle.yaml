@@ -3,9 +3,13 @@ id: "modern.parent"
 description: "Global Casc Bundle"
 version: "1"
 jcasc:
-  - "general.yaml"
-  - "security.yaml"
+  - general.yaml
+  - security.yaml
 plugins:
-  - "plugins.yaml"
+  - plugins.yaml
+items:
+  - items-folder-admin.yaml
 catalog:
-  - "plugin-catalog.yaml"
+  - plugin-catalog.yaml
+rbac:
+  - rbac.yaml
