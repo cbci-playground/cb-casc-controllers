@@ -94,7 +94,7 @@ kube:
       - persistentVolumeClaim:
           claimName: "maven-cache"
           mountPath: "/root/.m2/repository"
-          readOnly: true
+          readOnly: false
       yaml: |-
           apiVersion: v1
           kind: Pod
