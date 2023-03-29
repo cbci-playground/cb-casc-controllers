@@ -1,3 +1,7 @@
+removeStrategy:
+  rbac: SYNC
+  items: NONE
+
 kind: folder
 name: admin
 displayName: admin
