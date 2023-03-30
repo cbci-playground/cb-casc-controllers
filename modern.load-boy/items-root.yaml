@@ -50,17 +50,11 @@ items:
             agent none
             stages {
               stage('Build') {
-                environment {
-                  MOCK_DATA_SIZE = '24M'
-                }
                 agent {
                   kubernetes {
                     yaml '''
                       apiVersion: v1
                       kind: Pod
-                      metadata:
-                        labels:
-                          some-label: some-label-value
                       spec:
                         containers:
                         - name: maven
@@ -95,9 +89,6 @@ items:
                     yaml '''
                       apiVersion: v1
                       kind: Pod
-                      metadata:
-                        labels:
-                          some-label: some-label-value
                       spec:
                         containers:
                         - name: busybox
@@ -132,7 +123,7 @@ items:
                       steps {
                           dir ("unstash"){ // To avoid java.nio.file.AccessDeniedException
                               unstash 'stuff'
-                              sh "sleep ${SLEEP_SEC}"
+                              sh "sleep 10"
                               archiveArtifacts allowEmptyArchive: true, artifacts: 'mock.*.dat'
                           }
                       } 
