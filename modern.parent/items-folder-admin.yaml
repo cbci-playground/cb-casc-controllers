@@ -18,7 +18,7 @@ items:
           s3Store:
             bucketName: crodriguezlopez-v3.backups
             sse: true
-            bucketFolder: cbci_backup_plugin/builds
+            bucketFolder: cbci/backups/builds
             region: us-east-1
     concurrentBuild: false
     displayName: restore-builds
@@ -30,7 +30,7 @@ items:
           s3Store:
             bucketName: crodriguezlopez-v3.backups
             sse: true
-            bucketFolder: cbci_backup_plugin/conf
+            bucketFolder: cbci/backups/conf
             region: us-east-1
     concurrentBuild: false
     displayName: restore-config
