@@ -5,12 +5,11 @@ removeStrategy:
 items:
   - kind: pipeline
     name: mock-loader-junit
-    concurrentBuild: true
-    properties:
-      - pipelineTriggers:
-          triggers:
-            - cron:
-                spec: H/15 * * * *
+    # properties:
+    #   - pipelineTriggers:
+    #       triggers:
+    #         - cron:
+    #             spec: H/15 * * * *
     definition:
       cpsFlowDefinition:
         sandbox: true
@@ -38,7 +37,11 @@ items:
           }}]})
   - kind: pipeline
     name: mock-loader-stasher
-    concurrentBuild: false
+    # properties:
+    # - pipelineTriggers:
+    #     triggers:
+    #     - cron:
+    #         spec: H/30 * * * *
     definition:
       cpsFlowDefinition:
         sandbox: true
@@ -141,10 +144,3 @@ items:
               }
             }
           }
-    displayName: pipeline-declarative
-    properties:
-    - pipelineTriggers:
-        triggers:
-        - cron:
-            spec: H/30 * * * *
-    resumeBlocked: false
