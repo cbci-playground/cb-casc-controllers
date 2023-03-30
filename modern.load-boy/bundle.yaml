@@ -5,7 +5,5 @@ version: "1"
 parent: "modern.parent"
 allowCapExceptions: true
 jcascMergeStrategy: "errorOnConflict"
-jcasc:
-  - security.yaml
 items:
   - items-root.yaml
