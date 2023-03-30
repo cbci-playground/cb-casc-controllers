@@ -77,12 +77,15 @@ plugins:
 - id: momentjs
 - id: nectar-license
 - id: nectar-rbac
+- id: notification-api
 - id: oauth-credentials
 - id: okhttp-api
 - id: operations-center-agent
 - id: operations-center-client
 - id: operations-center-context
+- id: operations-center-notification
 - id: pipeline-build-step
+- id: pipeline-event-step
 - id: pipeline-graph-analysis
 - id: pipeline-groovy-lib
 - id: pipeline-input-step

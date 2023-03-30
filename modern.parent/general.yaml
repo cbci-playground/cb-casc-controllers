@@ -99,3 +99,6 @@ kube:
                 operator: "Equal"
                 value: "build-linux"
                 effect: "NoSchedule"
+notificationConfiguration:
+  enabled: true
+  router: "operationsCenter"
