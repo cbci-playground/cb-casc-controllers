@@ -70,7 +70,7 @@ items:
                   container('maven') {
                       sh """
                           mvn -version
-                          sleep ${SLEEP_SEC}
+                          sleep 10
                           dd if=/dev/zero of=mock.*.dat  bs=24M  count=1
                       """
                     stash name: 'stuff', includes: 'mock.*.dat'
@@ -78,7 +78,7 @@ items:
                 }
               }
               stage("Checkpoint") {
-                agent none //running outside of any node or workspace
+                agent none
                 steps {
                   checkpoint 'middle'
                 }
@@ -154,9 +154,6 @@ items:
                     yaml '''
                       apiVersion: v1
                       kind: Pod
-                      metadata:
-                        labels:
-                          some-label: some-label-value
                       spec:
                         containers:
                         - name: maven
@@ -172,15 +169,15 @@ items:
                   container('maven') {
                       sh """
                           mvn -version
-                          sleep ${SLEEP_SEC}
-                          dd if=/dev/zero of=mock.${BUILD_NUMBER}.dat  bs=${MOCK_DATA_SIZE}  count=1
+                          sleep ^${SLEEP_SEC}
+                          dd if=/dev/zero of=mock.${BUILD_NUMBER}.dat  bs=^${MOCK_DATA_SIZE}  count=1
                       """
                     stash name: 'stuff', includes: 'mock.*.dat'
                   }
                 }
               }
               stage("Checkpoint") {
-                agent none //running outside of any node or workspace
+                agent none
                 steps {
                   checkpoint 'middle'
                 }
@@ -191,9 +188,6 @@ items:
                     yaml '''
                       apiVersion: v1
                       kind: Pod
-                      metadata:
-                        labels:
-                          some-label: some-label-value
                       spec:
                         containers:
                         - name: busybox
@@ -228,7 +222,7 @@ items:
                       steps {
                           dir ("unstash"){ // To avoid java.nio.file.AccessDeniedException
                               unstash 'stuff'
-                              sh "sleep ${SLEEP_SEC}"
+                              sh "sleep ^${SLEEP_SEC}"
                               archiveArtifacts allowEmptyArchive: true, artifacts: 'mock.*.dat'
                           }
                       } 
