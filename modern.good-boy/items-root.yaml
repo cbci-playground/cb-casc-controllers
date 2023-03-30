@@ -1,5 +1,21 @@
 removeStrategy:
   rbac: SYNC
   items: NONE
+items:
+- kind: pipeline
+  name: crossTeam-build-stormer
+  definition:
+    cpsFlowDefinition:
+      sandbox: true
+      script: |-
+        pipeline {
+            agent any
 
-items: []
+            stages {
+                stage('Example') {
+                    steps {
+                        publishEvent event:jsonEvent('{"eventName":"build-it"}'), verbose: true
+                    }
+                }
+            }
+        }
