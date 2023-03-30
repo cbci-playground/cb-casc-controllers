@@ -136,7 +136,8 @@ items:
             }
           }
   #https://github.com/jenkinsci/configuration-as-code-plugin/blob/master/docs/features/secrets.adoc#passing-secrets-through-variables        
-  # - kind: pipeline
+  #TODO: Use variables   
+  #- kind: pipeline
   #   name: mock-loader-stasher-var
   #   properties:
   #   definition:
