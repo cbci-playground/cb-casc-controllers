@@ -75,9 +75,9 @@ items:
                       sh """
                           mvn -version
                           sleep 10
-                          dd if=/dev/zero of=mock.*.dat  bs=24M  count=1
+                          dd if=/dev/zero of=mock.dat  bs=24M  count=1
                       """
-                    stash name: 'stuff', includes: 'mock.*.dat'
+                    stash name: 'stuff', includes: 'mock.dat'
                   }
                 }
               }
@@ -127,7 +127,7 @@ items:
                           dir ("unstash"){ // To avoid java.nio.file.AccessDeniedException
                               unstash 'stuff'
                               sh "sleep 10"
-                              archiveArtifacts allowEmptyArchive: true, artifacts: 'mock.*.dat'
+                              archiveArtifacts allowEmptyArchive: true, artifacts: 'mock.dat'
                           }
                       } 
                   }
