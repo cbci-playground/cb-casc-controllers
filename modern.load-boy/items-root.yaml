@@ -14,6 +14,7 @@ items:
       cpsFlowDefinition:
         sandbox: true
         script: |
+          properties([pipelineTriggers([eventTrigger(jmespathQuery("eventName=='build-it'"))])])
           parallel([0, 1].collectEntries {b -> ["branch-$b", {
             podTemplate {
               node("maven") {
@@ -48,6 +49,9 @@ items:
         script: |
           pipeline {
             agent none
+            triggers {
+              eventTrigger jmespathQuery("eventName=='build-it'")
+            }
             stages {
               stage('Build') {
                 agent {
@@ -107,7 +111,6 @@ items:
                           script {
                               Random random = new Random()
                               def random_int = (int) random.next(50)
-                              echo "random_int : ${random_int}"
                               if (random_int % 2 == 0) {
                                 currentBuild.result = 'SUCCESS'
                               } else {
