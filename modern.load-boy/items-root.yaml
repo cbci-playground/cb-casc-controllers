@@ -5,11 +5,11 @@ removeStrategy:
 items:
   - kind: pipeline
     name: mock-loader-junit
-    # properties:
-    #   - pipelineTriggers:
-    #       triggers:
-    #         - cron:
-    #             spec: H/15 * * * *
+    properties:
+      - pipelineTriggers:
+          triggers:
+            - cron:
+                spec: H/15 * * * *
     definition:
       cpsFlowDefinition:
         sandbox: true
@@ -37,110 +37,59 @@ items:
           }}]})
   - kind: pipeline
     name: mock-loader-stasher
-    # properties:
-    # - pipelineTriggers:
-    #     triggers:
-    #     - cron:
-    #         spec: H/30 * * * *
+    properties:
+    - pipelineTriggers:
+        triggers:
+        - cron:
+            spec: H/30 * * * *
     definition:
       cpsFlowDefinition:
         sandbox: true
-        script: |
-          pipeline {
-            agent none
-            environment {
-              SLEEP_SEC = '1'
-            }
-            stages {
-              stage('Build') {
-                environment {
-                  MOCK_DATA_SIZE = '24M'
-                }
-                agent {
-                  kubernetes {
-                    yaml '''
-                      apiVersion: v1
-                      kind: Pod
-                      metadata:
-                        labels:
-                          some-label: some-label-value
-                      spec:
-                        containers:
-                        - name: maven
-                          image: maven:alpine
-                          command:
-                          - cat
-                          tty: true
-                      '''
-                    retries 2
-                  }
-                } 
-                steps {
-                  container('maven') {
-                      sh """
-                          mvn -version
-                          sleep ${SLEEP_SEC}
-                          dd if=/dev/zero of=mock.${BUILD_NUMBER}.dat  bs=${MOCK_DATA_SIZE}  count=1
-                      """
-                    stash name: 'stuff', includes: 'mock.*.dat'
-                  }
-                }
-              }
-              stage("Checkpoint") {
-                agent none //running outside of any node or workspace
-                steps {
-                  checkpoint 'middle'
-                }
-              }
-              stage('Post Build') {
-                agent {
-                  kubernetes {
-                    yaml '''
-                      apiVersion: v1
-                      kind: Pod
-                      metadata:
-                        labels:
-                          some-label: some-label-value
-                      spec:
-                        containers:
-                        - name: busybox
-                          image: busybox
-                          command:
-                          - cat
-                          tty: true
-                      '''
-                    retries 2
-                    defaultContainer 'busybox'
-                  }
-                } 
-                stages {
-                    stage ('Test'){
-                      steps {  
-                          script {
-                              Random random = new Random()
-                              def random_int = (int) random.next(50)
-                              echo "random_int : ${random_int}"
-                              if (random_int % 2 == 0) {
-                                currentBuild.result = 'SUCCESS'
-                              } else {
-                                currentBuild.result = 'FAILURE'
-                              }
-                          }
-                      }    
-                    }
-                    stage ('Deploy'){
-                      when {
-                          expression { currentBuild.result == 'SUCCESS' }
-                      }
-                      steps {
-                          dir ("unstash"){ // To avoid java.nio.file.AccessDeniedException
-                              unstash 'stuff'
-                              sh "sleep ${SLEEP_SEC}"
-                              archiveArtifacts allowEmptyArchive: true, artifacts: 'mock.*.dat'
-                          }
-                      } 
-                  }
-                }
-              }
-            }
-          }
+        script: "          pipeline {\n            agent none\n            environment\
+          \ {\n              SLEEP_SEC = '1'\n            }\n            stages {\n  \
+          \            stage('Build') {\n                environment {\n             \
+          \     MOCK_DATA_SIZE = '24M'\n                }\n                agent {\n \
+          \                 kubernetes {\n                    yaml '''\n             \
+          \         apiVersion: v1\n                      kind: Pod\n                \
+          \      metadata:\n                        labels:\n                        \
+          \  some-label: some-label-value\n                      spec:\n             \
+          \           containers:\n                        - name: maven\n           \
+          \               image: maven:alpine\n                          command:\n  \
+          \                        - cat\n                          tty: true\n      \
+          \                '''\n                    retries 2\n                  }\n \
+          \               } \n                steps {\n                  container('maven')\
+          \ {\n                      sh \"\"\"\n                          mvn -version\n\
+          \                          sleep ${SLEEP_SEC}\n                          dd\
+          \ if=/dev/zero of=mock.${BUILD_NUMBER}.dat  bs=${MOCK_DATA_SIZE}  count=1\n\
+          \                      \"\"\"\n                    stash name: 'stuff', includes:\
+          \ 'mock.*.dat'\n                  }\n                }\n              }\n  \
+          \            stage(\"Checkpoint\") {\n                agent none //running outside\
+          \ of any node or workspace\n                steps {\n                  checkpoint\
+          \ 'middle'\n                }\n              }\n              stage('Post Build')\
+          \ {\n                agent {\n                  kubernetes {\n             \
+          \       yaml '''\n                      apiVersion: v1\n                   \
+          \   kind: Pod\n                      metadata:\n                        labels:\n\
+          \                          some-label: some-label-value\n                  \
+          \    spec:\n                        containers:\n                        - name:\
+          \ busybox\n                          image: busybox\n                      \
+          \    command:\n                          - cat\n                          tty:\
+          \ true\n                      '''\n                    retries 2\n         \
+          \           defaultContainer 'busybox'\n                  }\n              \
+          \  } \n                stages {\n                    stage ('Test'){\n     \
+          \                 steps {  \n                          script {\n          \
+          \                    Random random = new Random()\n                        \
+          \      def random_int = (int) random.next(50)\n                            \
+          \  echo \"random_int : ${random_int}\"\n                              if (random_int\
+          \ % 2 == 0) {\n                                currentBuild.result = 'SUCCESS'\n\
+          \                              } else {\n                                currentBuild.result\
+          \ = 'FAILURE'\n                              }\n                          }\n\
+          \                      }    \n                    }\n                    stage\
+          \ ('Deploy'){\n                      when {\n                          expression\
+          \ { currentBuild.result == 'SUCCESS' }\n                      }\n          \
+          \            steps {\n                          dir (\"unstash\"){ // To avoid\
+          \ java.nio.file.AccessDeniedException\n                              unstash\
+          \ 'stuff'\n                              sh \"sleep ${SLEEP_SEC}\"\n       \
+          \                       archiveArtifacts allowEmptyArchive: true, artifacts:\
+          \ 'mock.*.dat'\n                          }\n                      } \n    \
+          \              }\n                }\n              }\n            }\n      \
+          \    }\n"
