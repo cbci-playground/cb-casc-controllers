@@ -68,6 +68,20 @@ unclassified:
   provisioningLimitConfiguration:
     limit:
       nodes: 50
+  # Best Practice: Pipeline: Use Global Libraries 
+  globalLibraries:
+    libraries:
+    - defaultVersion: "pipelines"
+      implicit: true
+      name: "cbci.jenkins-lib"
+      retriever:
+        modernSCM:
+          scm:
+            git:
+              credentialsId: "GH-token"
+              remote: "https://github.com/carlosrodlop/cbci.jenkins-lib"
+              traits:
+              - "gitBranchDiscovery"
 kube:
   podTemplatesConfiguration:
     templates:
@@ -102,3 +116,5 @@ kube:
 notificationConfiguration:
   enabled: true
   router: "operationsCenter"
+
+

@@ -12,7 +12,7 @@ items:
             agent any
 
             stages {
-                stage('Example') {
+                stage('Storm') {
                     steps {
                         publishEvent event:jsonEvent('{"eventName":"build-it"}'), verbose: true
                     }

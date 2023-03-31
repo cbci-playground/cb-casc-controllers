@@ -9,230 +9,34 @@ items:
       - pipelineTriggers:
           triggers:
             - cron:
-                spec: H/15 * * * *
+                spec: H/2 * * * *
     definition:
       cpsFlowDefinition:
         sandbox: true
         script: |
-          properties([pipelineTriggers([eventTrigger(jmespathQuery("eventName=='build-it'"))])])
-          parallel([0, 1].collectEntries {b -> ["branch-$b", {
-            podTemplate {
-              node("maven") {
-                stage('Preparation') {
-                  sh 'curl https://ipinfo.io/'
-                }
-                stage('Build') {
-                  mockLoad 90
-                }
-            }
-            checkpoint 'middle'
-            podTemplate {
-              node("maven") {
-                stage('Deploy') {
-                  archiveArtifacts allowEmptyArchive: true, artifacts: 'mock-artifact-*.txt'
-                  fingerprint 'mock-artifact-*.txt'
-                  junit 'mock-junit.xml'
-                }
-              }
-            }
-          }}]})
+          def configYaml = """---
+          eventName: 'build-it'
+          buildTime: 90
+          """
+
+          plMockBuild (configYaml)
   - kind: pipeline
     name: mock-loader-stasher-fix
     properties:
     - pipelineTriggers:
         triggers:
         - cron:
-            spec: H/30 * * * *
+            spec: H/3 * * * *
     definition:
       cpsFlowDefinition:
         sandbox: true
         script: |
-          pipeline {
-            agent none
-            triggers {
-              eventTrigger jmespathQuery("eventName=='build-it'")
-            }
-            stages {
-              stage('Build') {
-                agent {
-                  kubernetes {
-                    yaml '''
-                      apiVersion: v1
-                      kind: Pod
-                      spec:
-                        containers:
-                        - name: maven
-                          image: maven:alpine
-                          command:
-                          - cat
-                          tty: true
-                      '''
-                    retries 2
-                  }
-                } 
-                steps {
-                  container('maven') {
-                      sh """
-                          mvn -version
-                          sleep 10
-                          dd if=/dev/zero of=mock.dat  bs=24M  count=1
-                      """
-                    stash name: 'stuff', includes: 'mock.dat'
-                  }
-                }
-              }
-              stage("Checkpoint") {
-                agent none
-                steps {
-                  checkpoint 'middle'
-                }
-              }
-              stage('Post Build') {
-                agent {
-                  kubernetes {
-                    yaml '''
-                      apiVersion: v1
-                      kind: Pod
-                      spec:
-                        containers:
-                        - name: busybox
-                          image: busybox
-                          command:
-                          - cat
-                          tty: true
-                      '''
-                    retries 2
-                    defaultContainer 'busybox'
-                  }
-                } 
-                stages {
-                    stage ('Test'){
-                      steps {  
-                          script {
-                              Random random = new Random()
-                              def random_int = (int) random.next(50)
-                              if (random_int % 2 == 0) {
-                                currentBuild.result = 'SUCCESS'
-                              } else {
-                                currentBuild.result = 'FAILURE'
-                              }
-                          }
-                      }    
-                    }
-                    stage ('Deploy'){
-                      when {
-                          expression { currentBuild.result == 'SUCCESS' }
-                      }
-                      steps {
-                          dir ("unstash"){ // To avoid java.nio.file.AccessDeniedException
-                              unstash 'stuff'
-                              sh "sleep 10"
-                              archiveArtifacts allowEmptyArchive: true, artifacts: 'mock.dat'
-                          }
-                      } 
-                  }
-                }
-              }
-            }
-          }
-  #https://github.com/jenkinsci/configuration-as-code-plugin/blob/master/docs/features/secrets.adoc#passing-secrets-through-variables        
-  #TODO: Use variables   
-  #- kind: pipeline
-  #   name: mock-loader-stasher-var
-  #   properties:
-  #   definition:
-  #     cpsFlowDefinition:
-  #       sandbox: true
-  #       script: |
-  #         pipeline {
-  #           agent none
-  #           environment {
-  #             SLEEP_SEC = '1'
-  #           }
-  #           stages {
-  #             stage('Build') {
-  #               environment {
-  #                 MOCK_DATA_SIZE = '24M'
-  #               }
-  #               agent {
-  #                 kubernetes {
-  #                   yaml '''
-  #                     apiVersion: v1
-  #                     kind: Pod
-  #                     spec:
-  #                       containers:
-  #                       - name: maven
-  #                         image: maven:alpine
-  #                         command:
-  #                         - cat
-  #                         tty: true
-  #                     '''
-  #                   retries 2
-  #                 }
-  #               } 
-  #               steps {
-  #                 container('maven') {
-  #                     sh """
-  #                         mvn -version
-  #                         sleep ^${SLEEP_SEC}
-  #                         dd if=/dev/zero of=mock.${BUILD_NUMBER}.dat  bs=^${MOCK_DATA_SIZE}  count=1
-  #                     """
-  #                   stash name: 'stuff', includes: 'mock.*.dat'
-  #                 }
-  #               }
-  #             }
-  #             stage("Checkpoint") {
-  #               agent none
-  #               steps {
-  #                 checkpoint 'middle'
-  #               }
-  #             }
-  #             stage('Post Build') {
-  #               agent {
-  #                 kubernetes {
-  #                   yaml '''
-  #                     apiVersion: v1
-  #                     kind: Pod
-  #                     spec:
-  #                       containers:
-  #                       - name: busybox
-  #                         image: busybox
-  #                         command:
-  #                         - cat
-  #                         tty: true
-  #                     '''
-  #                   retries 2
-  #                   defaultContainer 'busybox'
-  #                 }
-  #               } 
-  #               stages {
-  #                   stage ('Test'){
-  #                     steps {  
-  #                         script {
-  #                             Random random = new Random()
-  #                             def random_int = (int) random.next(50)
-  #                             echo "random_int : ${random_int}"
-  #                             if (random_int % 2 == 0) {
-  #                               currentBuild.result = 'SUCCESS'
-  #                             } else {
-  #                               currentBuild.result = 'FAILURE'
-  #                             }
-  #                         }
-  #                     }    
-  #                   }
-  #                   stage ('Deploy'){
-  #                     when {
-  #                         expression { currentBuild.result == 'SUCCESS' }
-  #                     }
-  #                     steps {
-  #                         dir ("unstash"){ // To avoid java.nio.file.AccessDeniedException
-  #                             unstash 'stuff'
-  #                             sh "sleep ^${SLEEP_SEC}"
-  #                             archiveArtifacts allowEmptyArchive: true, artifacts: 'mock.*.dat'
-  #                         }
-  #                     } 
-  #                 }
-  #               }
-  #             }
-  #           }
-  #         }
+          def configYaml = """---
+          eventName: 'build-it'
+          sleepTime: 5
+          fileSize: '50M'
+          """
+
+          plMockStasher (configYaml)
+
+

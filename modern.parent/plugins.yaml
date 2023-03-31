@@ -2,8 +2,10 @@ plugins:
 - id: ace-editor
 - id: antisamy-markup-formatter
 - id: apache-httpcomponents-client-4-api
+- id: artifact-manager-s3
 - id: authentication-tokens
 - id: aws-credentials
+- id: aws-global-configuration
 - id: aws-java-sdk-ec2
 - id: aws-java-sdk-minimal
 - id: blueocean-commons
@@ -40,12 +42,14 @@ plugins:
 - id: commons-lang3-api
 - id: commons-text-api
 - id: configuration-as-code
+- id: copyartifact
 - id: credentials
 - id: credentials-binding
 - id: display-url-api
 - id: durable-task
 - id: echarts-api
 - id: font-awesome-api
+- id: git
 - id: git-client
 - id: handy-uri-templates-2-api
 - id: infradna-backup
@@ -54,6 +58,7 @@ plugins:
 - id: jackson2-api
 - id: jakarta-activation-api
 - id: jakarta-mail-api
+- id: javadoc
 - id: javax-activation-api
 - id: javax-mail-api
 - id: jaxb
@@ -69,6 +74,8 @@ plugins:
 - id: mailer
 - id: managed-master-hibernation
 - id: mapdb-api
+- id: matrix-project
+- id: maven-plugin
 - id: metrics
 - id: mina-sshd-api-common
 - id: mina-sshd-api-core
