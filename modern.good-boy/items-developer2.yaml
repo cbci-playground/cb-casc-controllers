@@ -1,0 +1,20 @@
+- kind: folder
+  name: developer2
+  displayName: developer2
+  groups:
+  - members:
+      users:
+      - developer_2
+    roles:
+    - name: browse
+      grantedAt: current
+    - name: develop
+      grantedAt: current
+    name: Developer2
+  items:
+  - kind: pipeline
+    name: pipeline-test-2
+    concurrentBuild: true
+    disabled: false
+    displayName: pipeline-test-2
+    resumeBlocked: false

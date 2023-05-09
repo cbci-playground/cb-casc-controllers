@@ -9,3 +9,6 @@ jcasc:
   - security.yaml
 items:
   - items-root.yaml
+rbac:
+  - rbac.yaml
+

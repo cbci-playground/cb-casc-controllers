@@ -9,3 +9,5 @@ items:
   - items-root.yaml
 variables:
   - variables.yaml
+rbac:
+  - rbac.yaml
