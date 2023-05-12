@@ -55,4 +55,3 @@ items:
       allowedTypes:
       - carlosrodlopDemos/docker-java-maven-app-m-gh-taints
       - carlosrodlopDemos/simple-java-maven-app
-      filter: true
