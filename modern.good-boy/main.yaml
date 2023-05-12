@@ -1,0 +1,8 @@
+globalCloudBeesPipelineTemplateCatalog:
+  catalogs:
+  - branchOrTag: "pipelines"
+    scm:
+      git:
+        credentialsId: "GH-token"
+        remote: "https://github.com/carlosrodlop/cbci.jenkins-lib.git"
+    updateInterval: "1d"
