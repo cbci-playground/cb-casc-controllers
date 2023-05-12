@@ -11,4 +11,7 @@ items:
   - items-root.yaml
 rbac:
   - rbac.yaml
-
+plugins:
+  - plugins.yaml
+catalog:
+  - plugin-catalog.yaml

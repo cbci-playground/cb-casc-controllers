@@ -1,0 +1,8 @@
+type: plugin-catalog
+version: '1'
+name: Load Plugin Catalog
+configurations:
+- description: Exported plugins
+  includePlugins:
+    mock-load-builder:
+      version: 54.v39abc2f1e659

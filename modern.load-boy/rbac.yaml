@@ -91,11 +91,3 @@ groups:
   - name: administer
     grantedAt: current
   name: Administrators
-- members:
-    external_groups:
-    - Dev_Team_Y
-  roles:
-  - name: browse
-    grantedAt: current
-    propagates: 'false'
-  name: Developers
