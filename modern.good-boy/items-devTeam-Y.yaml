@@ -15,40 +15,40 @@ items:
       grantedAt: current
     name: Developer
   items:
-  - kind: cloudbeesTemplatedJob
-    catalog: carlosrodlopDemos
-    name: Template - Multibrach Kaniko
-    model: carlosrodlopDemos/docker-java-maven-app-m-gh-taints
-    attributes:
-    - value: src/main/docker/Dockerfile
-      key: d_path
-    - value: carlosrodlop
-      key: gh_owner
-    - value: cbci-agents
-      key: k8_agentNs
-    - value: maven_kaniko_pod
-      key: k8_agent_yaml
-    - value: Template - Multibrach Kaniko
-      key: name
-    - value: simple-app
-      key: gh_repo
-    - value: carlosrodlop
-      key: d_registry
-    - value: true
-      key: d_latest
-    - value: GH-token
-      key: gh_cred
   # - kind: cloudbeesTemplatedJob
   #   catalog: carlosrodlopDemos
-  #   name: Template - Simple Java Maven App
-  #   model: carlosrodlopDemos/simple-java-maven-app
+  #   name: Template - Multibrach Kaniko
+  #   model: carlosrodlopDemos/docker-java-maven-app-m-gh-taints
   #   attributes:
-  #   - value: GH-token
-  #     key: github_creds
-  #   - value: Template - Simple Java Maven App
+  #   - value: src/main/docker/Dockerfile
+  #     key: d_path
+  #   - value: carlosrodlop
+  #     key: gh_owner
+  #   - value: cbci-agents
+  #     key: k8_agentNs
+  #   - value: maven_kaniko_pod
+  #     key: k8_agent_yaml
+  #   - value: Template - Multibrach Kaniko
   #     key: name
-  #   - value: https://github.com/jglick/simple-maven-project-with-tests.git
-  #     key: github_repo
+  #   - value: simple-app
+  #     key: gh_repo
+  #   - value: carlosrodlop
+  #     key: d_registry
+  #   - value: true
+  #     key: d_latest
+  #   - value: GH-token
+  #     key: gh_cred
+  - kind: cloudbeesTemplatedJob
+    catalog: carlosrodlopDemos
+    name: Template - Simple Java Maven App
+    model: carlosrodlopDemos/simple-java-maven-app
+    attributes:
+    - value: GH-token
+      key: github_creds
+    - value: Template - Simple Java Maven App
+      key: name
+    - value: https://github.com/jglick/simple-maven-project-with-tests.git
+      key: github_repo
   properties:
   - envVars: {}
   - itemRestrictions:
