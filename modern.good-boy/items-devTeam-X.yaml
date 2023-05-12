@@ -1,55 +1,45 @@
-kind: folder
-name: Dev_Team_X
-description: ''
-displayName: Dev_Team_X
-groups:
-- members:
-    external_groups:
-    - Dev_Team_X
-  roles:
-  - name: develop
-    grantedAt: current
-  name: Developer
+removeStrategy:
+  rbac: SYNC
+  items: NONE
 items:
-- kind: cloudbeesTemplatedJob
-  catalog: carlosrodlopDemos
-  name: Template - Simple Java Maven Pipeline
-  model: carlosrodlopDemos/simple-java-maven-app
-  attributes:
-  - value: GH-token
-    key: github_creds
-  - value: Template - Simple Java Maven Pipeline
-    key: name
-  - value: https://github.com/jglick/simple-maven-project-with-tests.git
-    key: github_repo
-- kind: pipeline
-  name: crossTeam-build-stormer
-  concurrentBuild: true
-  definition:
-    cpsFlowDefinition:
-      sandbox: true
-      script: |-
-        pipeline {
-            agent any
+- kind: folder
+  name: Dev_Team_X
+  displayName: Dev_Team_X
+  groups:
+  - members:
+      external_groups:
+      - Dev_Team_X
+    roles:
+    - name: develop
+      grantedAt: current
+    name: Developer
+  items:
+  - kind: pipeline
+    name: crossTeam-build-stormer
+    concurrentBuild: true
+    definition:
+      cpsFlowDefinition:
+        sandbox: true
+        script: |-
+          pipeline {
+              agent any
 
-            stages {
-                stage('Storm') {
-                    steps {
-                        publishEvent event:jsonEvent('{"eventName":"build-it"}'), verbose: true
-                    }
-                }
-            }
-        }
-  disabled: false
-  displayName: crossTeam-build-stormer
-  resumeBlocked: false
-properties:
-- envVars: {
-    }
-- itemRestrictions:
-    allowedTypes:
-    - org.jenkinsci.plugins.workflow.job.WorkflowJob
-    - jenkins.branch.OrganizationFolder
-    - carlosrodlopDemos/simple-java-maven-app
-    - org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject
-    filter: true
+              stages {
+                  stage('Storm') {
+                      steps {
+                          publishEvent event:jsonEvent('{"eventName":"build-it"}'), verbose: true
+                      }
+                  }
+              }
+          }
+    disabled: false
+    displayName: crossTeam-build-stormer
+    resumeBlocked: false
+  properties:
+  - envVars: {}
+  - itemRestrictions:
+      allowedTypes:
+      - org.jenkinsci.plugins.workflow.job.WorkflowJob
+      - jenkins.branch.OrganizationFolder
+      - org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject
+      filter: true

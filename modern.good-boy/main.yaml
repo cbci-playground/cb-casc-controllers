@@ -1,3 +1,5 @@
+# Best-Practice: Pipeline Templates
+# https://docs.cloudbees.com/docs/admin-resources/latest/pipeline-templates-user-guide/
 globalCloudBeesPipelineTemplateCatalog:
   catalogs:
   - branchOrTag: "pipelines"
