@@ -34,7 +34,7 @@ items:
       key: gh_repo
     - value: carlosrodlop
       key: d_registry
-    - value: 'true'
+    - value: true
       key: d_latest
     - value: GH-token
       key: gh_cred
