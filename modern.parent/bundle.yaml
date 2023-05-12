@@ -8,6 +8,6 @@ jcasc:
 plugins:
   - plugins.yaml
 items:
-  - items-folder-admin.yaml
+  - items-admin.yaml
 catalog:
   - plugin-catalog.yaml
