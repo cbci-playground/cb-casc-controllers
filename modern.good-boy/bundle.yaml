@@ -10,8 +10,8 @@ jcasc:
 plugins:
   - plugins.yaml
 items:
-  - items-devTeam-X.yaml
-  # - items-devTeam-Y.yaml
+  # - items-devTeam-X.yaml
+  - items-devTeam-Y.yaml
 variables:
   - variables.yaml
 rbac:
