@@ -4,7 +4,6 @@ removeStrategy:
 items:
 - kind: folder
   name: Dev_Team_Y
-  description: ''
   displayName: Dev_Team_Y
   groups:
   - members:
@@ -34,6 +33,7 @@ items:
       key: gh_repo
     - value: carlosrodlop
       key: d_registry
+    # Uncomment this section causes String to Boolean issue 
     # - value: true
     #   key: d_latest
     - value: GH-token

@@ -16,6 +16,7 @@ beekeeper:
   upgrades:
     autoDowngradePlugins: false
     autoUpgradePlugins: false
+# Best-Practice: Enable Advisor 
 advisor:
   acceptToS: true
   email: "example.user@mail.com"
@@ -63,6 +64,9 @@ unclassified:
     libraries:
     - defaultVersion: "pipelines"
       name: "cbci.jenkins-lib"
+  # Best-Practice: Adding cache for Shared Libraries    
+      cachingConfiguration:
+        refreshTimeMinutes: 5
       retriever:
         modernSCM:
           scm:
@@ -71,6 +75,11 @@ unclassified:
               remote: "https://github.com/carlosrodlop/cbci.jenkins-lib"
               traits:
               - "gitBranchDiscovery"
+  gitHubPluginConfig:
+    configs:
+    - credentialsId: "GH-ST-token" # From the OC
+      manageHooks: true
+      name: "github.com"
 kube:
   podTemplatesConfiguration:
     templates:
