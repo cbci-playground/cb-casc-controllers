@@ -75,6 +75,7 @@ unclassified:
               remote: "https://github.com/carlosrodlop/cbci.jenkins-lib"
               traits:
               - "gitBranchDiscovery"
+  # Best-Practice: Use WebHooks for SCM (over Polling) 
   gitHubPluginConfig:
     configs:
     - credentialsId: "GH-ST-token" # From the OC
