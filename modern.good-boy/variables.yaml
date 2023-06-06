@@ -1,2 +1,3 @@
 variables:
   - registry: my_registry
+  - cascVersionMessage: CasC Version 3
