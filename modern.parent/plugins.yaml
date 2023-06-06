@@ -30,6 +30,7 @@ plugins:
 - id: cloudbees-groovy-view
 - id: cloudbees-jenkins-advisor
 - id: cloudbees-license
+- id: cloudbees-pipeline-explorer
 - id: cloudbees-platform-common
 - id: cloudbees-platform-data
 - id: cloudbees-plugin-usage
@@ -96,6 +97,7 @@ plugins:
 - id: pipeline-build-step
 - id: pipeline-event-step
 - id: pipeline-graph-analysis
+- id: pipeline-graph-view
 - id: pipeline-groovy-lib
 - id: pipeline-input-step
 - id: pipeline-model-api

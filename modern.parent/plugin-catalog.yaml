@@ -1,15 +1,22 @@
 type: plugin-catalog
 version: '1'
-name: Parent Plugin Catalog
+name: Load Plugin Catalog
 configurations:
 - description: Exported plugins
   includePlugins:
-    pipeline-utility-steps:
-      version: 2.15.4
-    mock-load-builder:
-      version: 72.va_d24249b_1400
+    bootstrap4-api:
+      version: 4.6.0-6
     cloudbees-disk-usage-simple:
       version: 182.v62ca_0c992a_f3
+    cloudbees-pipeline-explorer:
+      version: '0.11'
     cloudbees-prometheus:
-      version: '2.387.1-cb-5'
-      #version: '1.0'
+      version: '1.2'
+    momentjs:
+      version: 1.1.1
+    pipeline-graph-view:
+      version: 191.vc6da_9d3eb_70a
+    pipeline-utility-steps:
+      version: 2.15.4
+    popper-api:
+      version: 1.16.1-3
