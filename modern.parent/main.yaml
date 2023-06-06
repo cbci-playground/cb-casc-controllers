@@ -103,7 +103,7 @@ kube:
       idleMinutesStr: "5"
       label: "maven"
       name: "maven"
-      nodeSelector: "ci_type=build-linux"
+      #nodeSelector: "ci_type=build-linux"
       nodeUsageMode: NORMAL
       yaml: |-
           apiVersion: v1
