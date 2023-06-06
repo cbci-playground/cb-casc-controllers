@@ -1,7 +1,7 @@
 apiVersion: "1"
 id: "modern.load-boy"
 description: "Casc Bundle for Load Controllers"
-version: "7"
+version: "1"
 parent: "modern.parent"
 allowCapExceptions: true
 jcascMergeStrategy: "errorOnConflict"
@@ -11,9 +11,10 @@ items:
   - items-root.yaml
 #rbac:
 #  - rbac.yaml
-plugins:
-  - plugins.yaml
-catalog:
-  - plugin-catalog.yaml
+#all moved to parent bundle
+#plugins:
+#  - plugins.yaml
+#catalog:
+#  - plugin-catalog.yaml
 variables:
   - variables.yaml

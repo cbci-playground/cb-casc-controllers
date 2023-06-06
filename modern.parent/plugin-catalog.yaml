@@ -20,3 +20,5 @@ configurations:
       version: 2.15.4
     popper-api:
       version: 1.16.1-3
+    mock-load-builder:
+      version: 54.v39abc2f1e659

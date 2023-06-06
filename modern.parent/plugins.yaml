@@ -85,6 +85,7 @@ plugins:
 - id: mina-sshd-api-core
 - id: mina-sshd-api-sftp
 - id: momentjs
+- id: mock-load-builder
 - id: nectar-license
 - id: nectar-rbac
 - id: notification-api
