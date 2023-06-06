@@ -1,7 +1,7 @@
 apiVersion: "1"
 id: "modern.parent"
 description: "Parent Casc Bundle"
-version: "2"
+version: "3"
 jcasc:
   - main.yaml
   - security.yaml
