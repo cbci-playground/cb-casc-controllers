@@ -6,6 +6,8 @@ jenkins:
   # Best-Practice: Do not use In-Build agents
   # https://support.cloudbees.com/hc/en-us/articles/115002654991
   numExecutors: 0
+  headerLabel:
+    text: "${cascVersionMessage}"
 # Best-Practice: Enable Beekeeper
 # https://docs.cloudbees.com/docs/admin-resources/latest/plugin-management/beekeeper-upgrade-assistant
 beekeeper:

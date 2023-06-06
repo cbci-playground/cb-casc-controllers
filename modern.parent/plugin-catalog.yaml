@@ -5,10 +5,11 @@ configurations:
 - description: Exported plugins
   includePlugins:
     pipeline-utility-steps:
-      version: 2.13.0
+      version: 2.15.4
     mock-load-builder:
-      version: 54.v39abc2f1e659
+      version: 72.va_d24249b_1400
     cloudbees-disk-usage-simple:
-      version: 178.v1a_4d2f6359a_8
+      version: 182.v62ca_0c992a_f3
     cloudbees-prometheus:
-      version: '1.0'
+      version: '2.387.1-cb-5'
+      #version: '1.0'
