@@ -9,8 +9,8 @@ jcasc:
   - security.yaml
 items:
   - items-root.yaml
-rbac:
-  - rbac.yaml
+#rbac:
+#  - rbac.yaml
 plugins:
   - plugins.yaml
 catalog:
