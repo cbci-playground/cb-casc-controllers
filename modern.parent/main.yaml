@@ -39,6 +39,11 @@ unclassified:
   hibernationConfiguration:
     enabled: true
     gracePeriod: 1800
+  cloudbeesPrometheus:
+    collectingMetricsPeriodInSeconds: 120
+    defaultNamespace: "cloudbees-core"
+    path: "prometheus"
+    useAuthenticatedEndpoint: false
   headerLabel:
     text: "${cascVersionMessage}"
   usageStatisticsCloudBees:
